@@ -14,11 +14,12 @@ MyBl:
 	orientation: "vertical"
 	
 	Label:
-		font_size: "15sp"
+		font_size: "18sp"
 		miltiline: True
-		text_size: self.width*0.98, None
+		text_size: self.width*0.98, self.height
+		valign: 'top'
 		size_hint_x: 1.0
-		size_hint_y: None
+		size_hint_y: 0.7
 		height: self.texture_size[1] + 15
 		text: root.data_label
 		
@@ -26,19 +27,20 @@ MyBl:
 		id: Inp
 		miltiline: False
 		padding_y: (5,5)
-		size_hint: (1, 0.5)
+		size_hint: (1, 0.2)
 		on_text: app.process()
 	
 	Button:
 		text: "Send message"
+		
 		bold: True
-		background_color:'#00FFCE'
-		size_hint: (1,0.5)
+		background_color:'#70FF00'
+		size_hint: (1,0.1)
 		on_press: root.callback()
 """
 
 class MyBl(BoxLayout):
-	data_label = StringProperty("Welcome!")
+	data_label = StringProperty("Welcome!\n")
 	
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
@@ -51,7 +53,7 @@ class MyBl(BoxLayout):
 	
 	def callback(self):
 		msg = self.ids.Inp.text
-		self.set_data_label("You:" + msg)
+		self.set_data_label("You: " + msg)
 		self.client.send(msg.encode('ascii'))
 		
 	def get_data(self):
